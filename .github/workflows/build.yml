@@ -10,6 +10,9 @@ jobs:
       - name: Build image
         run: docker build -t airecon-sandbox .
 
+      - name: Check disk space
+        run: df -h
+
       - name: Save image as tar
         run: docker save airecon-sandbox | gzip > airecon-sandbox.tar.gz
 
