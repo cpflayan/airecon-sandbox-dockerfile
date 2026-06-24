@@ -7,11 +7,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/share/boost \
+            /usr/local/lib/android /opt/hostedtoolcache "$AGENT_TOOLSDIRECTORY"
+          sudo docker system prune -af --volumes
+          df -h
+
       - name: Build image
         run: docker build -t airecon-sandbox .
 
-      - name: Check disk space
-        run: df -h
+      - name: Check size after build
+        run: docker images airecon-sandbox
 
       - name: Save image as tar
         run: docker save airecon-sandbox | gzip > airecon-sandbox.tar.gz
