@@ -1,0 +1,20 @@
+name: Build AIRecon Sandbox
+on: workflow_dispatch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build image
+        run: docker build -t airecon-sandbox .
+
+      - name: Save image as tar
+        run: docker save airecon-sandbox | gzip > airecon-sandbox.tar.gz
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: airecon-sandbox
+          path: airecon-sandbox.tar.gz
