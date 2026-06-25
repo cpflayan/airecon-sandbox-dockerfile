@@ -28,3 +28,5 @@ jobs:
         with:
           name: airecon-sandbox
           path: airecon-sandbox.tar.gz
+          retention-days: 7
+          compression-level: 0
